@@ -26,7 +26,7 @@ def posts_by_category(request, category_slug):
         'posts': posts
     }
     print(category)
-    return render(request, 'blog/post_by_category.html', context)
+    return render(request, 'blog/posts_by_category.html', context)
 
 def posts_by_tag(request, tag_slug):
     tag = Tag.objects.get(slug=tag_slug)
@@ -35,4 +35,4 @@ def posts_by_tag(request, tag_slug):
         'tag': tag,
         'posts': posts
     }
-    return render(request, 'blog/post_by_tag.html', context)
+    return render(request, 'blog/posts_by_tag.html', context)

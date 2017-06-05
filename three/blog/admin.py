@@ -15,9 +15,13 @@ class AuthorAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title','pub_date','author','category')
     search_fields = [ 'title','content']
+    #prepopulated_fields = {'slug': ('title',)} #auto populates the slug based on the post title name
+    readonly_fields = ('slug',)
     ordering = ['-pub_date']
     list_filter = ['pub_date']
     date_hierarchy = 'pub_date'
+    filter_horizontal = ('tags',) #adds horizontal tag chooser to the admin page
+    fields = ('title', 'slug', 'content', 'author', 'category', 'tags',)
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug',)
@@ -27,7 +31,7 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('name','slug')
     search_fields = ('name')
 
-admin.site.register(models.Post)
+admin.site.register(models.Post, PostAdmin)
 admin.site.register(models.Category)
 admin.site.register(models.Author, AuthorAdmin)
 admin.site.register(models.Tag)

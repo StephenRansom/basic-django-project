@@ -1,0 +1,10 @@
+{% for post in posts %}
+<h3>
+    <a href="{% url 'post_detail' post.id %}">{{ post.title|capfirst }}</a>
+</h3>
+<p class="info">
+    {% include 'blog/post_info.html' %}
+</p>
+{% empty %}
+<p>There are not posts under {{ category }}</p>
+{% endfor %}

@@ -1,10 +1,22 @@
+{% extends "blog/base.html" %} {% block title %} Blogg - {{ block.super }} {% endblock %} {% block content %}
+
+<div class="content">
+    <div class="section-inner clearfix">
 {% for post in posts %}
-<h3>
-    <a href="{% url 'post_detail' post.id %}">{{ post.title|capfirst }}</a>
-</h3>
-<p class="info">
-    {% include 'blog/post_info.html' %}
-</p>
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <h3><a href="{% url 'post_detail' post.id %}">{{ post.title|capfirst }}</a></h3>
+    </div>
+    <div class="panel-footer">
+        <p class="info">
+        {% include 'blog/post_info.html' %}
+        </p>
+    </div>
+</div>
 {% empty %}
 <p>There are not posts under {{ category }}</p>
 {% endfor %}
+
+    </div>
+
+    {% endblock %}

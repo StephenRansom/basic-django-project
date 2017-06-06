@@ -1,16 +1,23 @@
-{% extends "blog/base.html"  %}
+{% extends "blog/base.html"  %} {% load static %}
 
 {% block title %}
     {{ post.title|capfirst }} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
-    <h1>{{ post.title|capfirst }}</h1>
-    <p class="post-info">
-        {% include 'blog/post_info.html' %}
-    </p>
-    <p>
-        {{ post.content }}
-    </p>
-
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3><a>{{ post.title|capfirst }}</a></h3>
+    </div>
+    <div class="panel-body">
+         <p>
+            {{ post.content }}
+        </p>
+    </div>
+    <div class="panel-footer">
+        <p class="post-info">
+            {% include 'blog/post_info.html' %}
+        </p>       
+    </div>
+</div>
 {% endblock %}

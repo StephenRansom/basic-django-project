@@ -36,3 +36,12 @@ def posts_by_tag(request, tag_slug):
         'posts': posts
     }
     return render(request, 'blog/posts_by_tag.html', context)
+
+def posts_by_author(request, author_slug):
+    author = Author.objects.get(slug=author_slug)
+    posts = Post.objects.filter(author__name=author)
+    context = {
+        'author': author,
+        'posts': posts
+    }
+    return render(request, 'blog/posts_by_author.html', context)

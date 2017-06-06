@@ -21,7 +21,7 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ['pub_date']
     date_hierarchy = 'pub_date'
     filter_horizontal = ('tags',) #adds horizontal tag chooser to the admin page
-    fields = ('title', 'slug', 'content', 'author', 'category', 'tags',)
+    fields = ('title', 'slug', 'content', 'author', 'category', 'tags',) #specifies order of fields
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug',)

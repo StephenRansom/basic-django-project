@@ -53,7 +53,7 @@ class Post(models.Model):
     author = models.ForeignKey(Author)
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag)
-
+    
     def __str__(self):
         return self.title
 

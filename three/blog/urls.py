@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^author/(?P<author_slug>[\w-]+)/$', views.posts_by_author, name='posts_by_author'),
     url(r'^(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
     url(r'^$', views.post_list, name='post_list'),
+    # url(r'^cookie/$', views.test_cookie, name='cookie'),
     ]

@@ -4,6 +4,7 @@ import datetime
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import redirect, Http404, get_object_or_404, get_list_or_404
+from django.contrib import auth, messages
 from .models import Author, Tag, Category, Post
 
 
@@ -88,3 +89,71 @@ def test_delete(request):
     else:
         response = HttpResponse("Cookies can not be set")
     return response
+
+def save_session_data(request):
+    
+    # set new data
+    request.session['id'] = 1
+    request.session['name'] = 'root'
+    request.session['password'] = 'rootpass'
+
+    return HttpResponse("Session Data Saved")
+
+def access_session_data(request):
+
+    response = ""
+    if request.session.get('id'):
+        response += "Id : {0} <br>".format(request.session.get('id'))
+    if request.session.get('name'):
+        response += "Name : {0} <br>".format(request.session.get('name'))
+    if request.session.get('password'):
+        response += "Password : {0} <br>".format(request.session.get('password'))
+
+    if not response:
+        return HttpResponse("No session data")
+    else:
+        return HttpResponse(response)
+
+def delete_session_data(request):
+    
+    try:
+        del request.session['id']
+        del request.session['name']
+        del request.session['password']
+    except KeyError:
+        pass
+
+    return HttpResponse("Session Data cleared")
+
+def login(request):
+    if request.user.is_authenticated():
+        return redirect('admin_page')
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request,user)
+            return redirect('admin_page')
+        else:
+            message.error(request, 'Error, wrong username and/or password')
+    
+    return render(request, 'blog/login.html')
+
+def logout(request):
+    auth.logout(request)
+    return render(request, 'blog/logout.html')
+
+def admin_page(request):
+    if not request.user.is_authenticated():
+        return redirect('login')
+
+    return render(request, 'blog/admin_page.html')
+
+def test_logged_on_or_not(request):
+    if request.user.is_authenticated():
+        return HttpResponse("You are logged in")
+    else:
+        return redirect("login.html")
